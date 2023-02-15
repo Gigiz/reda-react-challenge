@@ -4,6 +4,8 @@ specifiers:
   '@types/node': ^18.13.0
   '@types/react': ^18.0.28
   '@types/react-dom': ^18.0.11
+  '@vanilla-extract/css': ^1.9.5
+  '@vanilla-extract/vite-plugin': ^3.8.0
   '@vitejs/plugin-react': ^3.1.0
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -19,6 +21,8 @@ devDependencies:
   '@types/node': 18.13.0
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
+  '@vanilla-extract/css': 1.9.5
+  '@vanilla-extract/vite-plugin': 3.8.0_vite@4.1.1
   '@vitejs/plugin-react': 3.1.0_vite@4.1.1
   typescript: 4.9.5
   vite: 4.1.1_@types+node@18.13.0
