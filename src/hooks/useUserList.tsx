@@ -1,14 +1,5 @@
 import { useEffect, useReducer } from "react"
-
-export type User = {
-  id: number
-  uuid: string
-  first_name: string
-  last_name: string
-  username: string
-  email: string
-  avatar: URL
-}
+import { User } from "vite-env"
 
 export enum ActionKind {
   FETCHING = "FETCHING",
@@ -28,11 +19,11 @@ type UserState = {
   error: string | null
 }
 
-export const useUserList = (size: number) => {
+export const useUserList = (size: number, initialData: User[] = []) => {
   const initialState: UserState = {
     status: ActionKind.IDLE,
     error: null,
-    data: [],
+    data: initialData,
   }
 
   const [state, dispatch] = useReducer((state: UserState, action: UserAction) => {
@@ -51,10 +42,6 @@ export const useUserList = (size: number) => {
   useEffect(() => {
     let revokeRequest = false
 
-    if (size > 20) {
-      dispatch({ type: ActionKind.ERROR, payload: "" })
-    }
-
     const renderData = async () => {
       dispatch({ type: ActionKind.FETCHING })
 
@@ -68,11 +55,15 @@ export const useUserList = (size: number) => {
         dispatch({ type: ActionKind.ERROR, payload: error.message })
       }
     }
-    renderData()
+
+    if (initialData.length === 0) {
+      size > 20 ? dispatch({ type: ActionKind.ERROR, payload: "too many users requested" }) : renderData()
+    }
+
     return () => {
       revokeRequest = true
     }
-  }, [size])
+  }, [size, initialData])
 
   return state
 }
