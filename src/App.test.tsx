@@ -6,6 +6,6 @@ describe("<App />", () => {
   it("should be render", () => {
     render(<App />)
 
-    expect(screen.getByText("Hello Vite!")).toBeInTheDocument()
+    expect(screen.getByText("Open Modal")).toBeInTheDocument()
   })
 })

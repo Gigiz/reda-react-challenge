@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react"
-import { ReactPortal } from "../ReactPortal"
+import { ReactPortal } from "components/ReactPortal"
 import { ModalContextProvider, useModal } from "context/ModalContext"
 import { closeModalButton, modal, modalOverlay, openModalButton } from "./styles.css"
 
