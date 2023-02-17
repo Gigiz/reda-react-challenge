@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react"
 import { ReactPortal } from "../ReactPortal"
 import { ModalContextProvider, useModal } from "context/ModalContext"
-import { button, modal } from "./styles.css"
+import { closeModalButton, modal, modalOverlay, openModalButton } from "./styles.css"
 
 const ModalRoot: React.FC<PropsWithChildren> = ({ children }) => (
   <ModalContextProvider>{children}</ModalContextProvider>
@@ -21,13 +21,23 @@ const ModalTrigger: React.FC = () => {
   const { toggleModal } = useModal()
   return (
     <button onClick={toggleModal}>
-      <div className={button}>Open Modal</div>
+      <div className={openModalButton}>Open Modal</div>
     </button>
   )
 }
 
 const ModalContent: React.FC<PropsWithChildren> = ({ children }) => {
-  return <div className={modal}>{children}</div>
+  const { closeModal } = useModal()
+  return (
+    <div className={modalOverlay}>
+      <div className={modal}>
+        <div onClick={closeModal} className={closeModalButton}>
+          &times;
+        </div>
+        <div>{children}</div>
+      </div>
+    </div>
+  )
 }
 
 const Root = ModalRoot

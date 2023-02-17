@@ -56,7 +56,7 @@ export const useUserList = (size: number, initialData: User[] = []) => {
       }
     }
 
-    if (initialData.length === 0) {
+    if (initialData.length === 0 && size > 0) {
       size > 20 ? dispatch({ type: ActionKind.ERROR, payload: "too many users requested" }) : renderData()
     }
 
