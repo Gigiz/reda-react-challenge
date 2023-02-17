@@ -2,23 +2,26 @@ import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext,
 import { User } from "vite-env"
 
 export type UsersInModalContextType = {
-  users: User[]
-  setUsers: Dispatch<SetStateAction<User[]>>
+  previousFetchedUser: User[]
+  saveFetchedUsers: Dispatch<SetStateAction<User[]>>
+  clearFetchedUsers: VoidFunction
 }
 
 export const UsersInModalContext = createContext<UsersInModalContextType>({
-  users: [],
-  setUsers: () => {},
+  previousFetchedUser: [],
+  saveFetchedUsers: () => {},
+  clearFetchedUsers: () => {},
 })
 
 export const UsersInModalContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [currentUsersInModal, setCurrentUsersInModal] = useState<User[]>([])
+  const [previousFetchedUser, saveFetchedUsers] = useState<User[]>([])
 
   return (
     <UsersInModalContext.Provider
       value={{
-        users: currentUsersInModal,
-        setUsers: setCurrentUsersInModal,
+        previousFetchedUser,
+        saveFetchedUsers,
+        clearFetchedUsers: () => saveFetchedUsers([]),
       }}
     >
       {children}
@@ -26,6 +29,6 @@ export const UsersInModalContextProvider: React.FC<PropsWithChildren> = ({ child
   )
 }
 
-export const useCurrentUsersInModal = () => {
+export const usePreviousUsersInModal = () => {
   return useContext(UsersInModalContext)
 }

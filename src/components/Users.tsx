@@ -1,37 +1,30 @@
-import { useCurrentUsersInModal } from "context/UserInModalContext"
+import { usePreviousUsersInModal } from "context/UserInModalContext"
 import { ActionKind, useUserList } from "hooks/useUserList"
 import { useEffect, useRef, useState } from "react"
+import { calculateGridColumnByItemsNumber } from "shared/utils/gridSize"
 import { User } from "vite-env"
 
 const defaultSizeValue = 10
 
-function parseUserSize(sizeString: string | undefined): number {
-  if (typeof sizeString === "undefined") {
-    return defaultSizeValue
-  }
-  const parsedSizeInNumber = parseInt(sizeString)
-  if (isNaN(parsedSizeInNumber)) {
-    return defaultSizeValue
-  }
-  return parsedSizeInNumber
-}
-
 export const Users: React.FC = () => {
   const sizeInputRef = useRef<HTMLInputElement>(null)
-  const { users, setUsers } = useCurrentUsersInModal()
-  const { status, data, error } = useUserList(parseUserSize(sizeInputRef.current?.value), users)
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const { previousFetchedUser, clearFetchedUsers, saveFetchedUsers } = usePreviousUsersInModal()
+  const { status, data, error } = useUserList(parseUserSize(sizeInputRef.current?.value), previousFetchedUser)
+  const [selectedUser, setSelectedUser] = useState<User | null>(previousFetchedUser[0])
 
   useEffect(() => {
     if (status === ActionKind.FETCHED) {
-      setUsers(data)
+      saveFetchedUsers(data)
+      setSelectedUser(data[0])
     }
   }, [data])
+
+  const gridSize = calculateGridColumnByItemsNumber(data.length)
 
   return (
     <div>
       <input ref={sizeInputRef} defaultValue={defaultSizeValue} type="text" />
-      <button onClick={() => setUsers([])}>Refetch</button>
+      <button onClick={clearFetchedUsers}>Refetch</button>
       <div
         style={{
           display: "flex",
@@ -62,33 +55,33 @@ export const Users: React.FC = () => {
           case ActionKind.FETCHING:
             return <div>Loading...</div>
           case ActionKind.ERROR:
-            return <div>An error {error}</div>
+            return <div>{error}</div>
           default:
             return (
               <div
                 style={{
                   width: "100%",
                   display: "grid",
-                  gridTemplateColumns: "repeat(5, 1fr)",
+                  gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
                   gridRowGap: ".5em",
                   gridColumnGap: "1em",
                 }}
               >
                 {data.map((user, index) => {
                   return (
-                    <div
+                    <button
                       style={{
                         cursor: "pointer",
                         minWidth: 100,
                         border: "1px solid red",
-                        backgroundColor: "red",
+                        backgroundColor: "#04AA6D",
                         color: "white",
                       }}
                       onClick={() => setSelectedUser(user)}
                       key={index}
                     >
                       {user.first_name}
-                    </div>
+                    </button>
                   )
                 })}
               </div>
@@ -97,4 +90,15 @@ export const Users: React.FC = () => {
       })()}
     </div>
   )
+}
+
+function parseUserSize(sizeString: string | undefined): number {
+  if (typeof sizeString === "undefined") {
+    return defaultSizeValue
+  }
+  const parsedSizeInNumber = parseInt(sizeString)
+  if (isNaN(parsedSizeInNumber)) {
+    return defaultSizeValue
+  }
+  return parsedSizeInNumber
 }
