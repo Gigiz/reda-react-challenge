@@ -8,7 +8,7 @@ declare global {
 
 interface User {
   id: number
-  uuid: string
+  uid: string
   first_name: string
   last_name: string
   username: string

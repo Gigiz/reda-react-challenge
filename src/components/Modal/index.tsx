@@ -20,8 +20,8 @@ const ModalPortal: React.FC<PropsWithChildren> = ({ children }) => {
 const ModalTrigger: React.FC = () => {
   const { toggleModal } = useModal()
   return (
-    <button onClick={toggleModal}>
-      <div className={openModalButton}>Open Modal</div>
+    <button className={openModalButton} onClick={toggleModal}>
+      Random Users
     </button>
   )
 }

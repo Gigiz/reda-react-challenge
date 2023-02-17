@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css"
 
 export const modalOverlay = style({
   position: "fixed",
-  backgroundColor: "rgba(255, 255, 255, 0.5)",
+  backgroundColor: "rgba(255, 255, 255, 0.05)",
   top: 0,
   right: 0,
   bottom: 0,
@@ -12,7 +12,8 @@ export const modalOverlay = style({
 })
 
 export const modal = style({
-  backgroundColor: "white",
+  backgroundColor: "#363c48",
+  color: "white",
   boxShadow: "0 10px 20px rgba(0,0,0, 0.2)",
   margin: "0 auto",
   width: "100%",
@@ -38,14 +39,17 @@ export const closeModalButton = style({
   top: 0,
   zIndex: 1,
   ":hover": {
-    backgroundColor: "whitesmoke",
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
   },
 })
 
 export const openModalButton = style({
-  backgroundColor: "white",
+  backgroundColor: "rgb(213, 68, 116)",
   padding: "16px 24px",
-  borderRadius: "8px",
-  textDecoration: "none",
-  cursor: "pointer",
+  borderRadius: "16px",
+  color: 'white',
+  cursor: 'pointer',
+  ':hover': {
+    backgroundColor: "#dc658d",
+  },
 })

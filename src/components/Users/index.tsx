@@ -3,6 +3,7 @@ import { ActionKind, useUserList } from "hooks/useUserList"
 import { useEffect, useRef, useState } from "react"
 import { calculateGridColumnByItemsNumber } from "shared/utils/gridSize"
 import { User } from "vite-env"
+import { buttonGroup, searchUsersButton, userProfile, userSearch } from "./styles.css"
 
 const defaultSizeValue = 10
 
@@ -23,22 +24,18 @@ export const Users: React.FC = () => {
 
   return (
     <div>
-      <input ref={sizeInputRef} defaultValue={defaultSizeValue} type="text" />
-      <button onClick={clearFetchedUsers}>Refetch</button>
-      <div
-        style={{
-          display: "flex",
-          padding: 24,
-          height: 198,
-          justifyContent: "center",
-          margin: "24px 0",
-          border: "1px solid whitesmoke",
-        }}
-      >
+      <div className={userSearch}>
+        <label htmlFor="users-number">Insert users' number to fetch</label>
+        <input ref={sizeInputRef} id="users-number" defaultValue={defaultSizeValue} type="text" />
+        <button className={searchUsersButton} onClick={clearFetchedUsers}>
+          Refetch
+        </button>
+      </div>
+      <div className={userProfile}>
         {selectedUser ? (
           <>
             <img loading="lazy" width={150} height={150} src={selectedUser.avatar.toString()} />
-            <ul style={{ alignSelf: "center" }}>
+            <ul>
               <li>
                 Name: {selectedUser.first_name} {selectedUser.last_name}
               </li>
@@ -63,20 +60,12 @@ export const Users: React.FC = () => {
                   width: "100%",
                   display: "grid",
                   gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
-                  gridRowGap: ".5em",
-                  gridColumnGap: "1em",
                 }}
               >
                 {data.map((user, index) => {
                   return (
                     <button
-                      style={{
-                        cursor: "pointer",
-                        minWidth: 100,
-                        border: "1px solid red",
-                        backgroundColor: "#04AA6D",
-                        color: "white",
-                      }}
+                      className={[buttonGroup, selectedUser?.uid === user.uid ? "active" : undefined].join(" ")}
                       onClick={() => setSelectedUser(user)}
                       key={index}
                     >
