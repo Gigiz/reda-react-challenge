@@ -18,6 +18,10 @@
 - `pnpm build` Builds the app for production to the `dist` folder
 - `pnpm serve` Runs the app in production mode serving content from `dist` folder
 
+## Live demo
+
+You can try a demo deployed on [vercel](https://reda-react-challenge.vercel.app/) 
+
 ## Running test
 
 - Run all suites: `pnpm test`
