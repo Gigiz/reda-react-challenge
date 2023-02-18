@@ -40,13 +40,16 @@ export const useUserList = (size: number, initialData: User[] = []) => {
   }, initialState)
 
   useEffect(() => {
+    const controller = new AbortController()
+    const { signal } = controller
+
     let revokeRequest = false
 
     const renderData = async () => {
       dispatch({ type: ActionKind.FETCHING })
 
       try {
-        const res = await fetch(`https://random-data-api.com/api/users/random_user?size=${size}`)
+        const res = await fetch(`https://random-data-api.com/api/users/random_user?size=${size}`, { signal })
         const data = await res.json()
         if (revokeRequest) return
         dispatch({ type: ActionKind.FETCHED, payload: data })
@@ -62,6 +65,7 @@ export const useUserList = (size: number, initialData: User[] = []) => {
 
     return () => {
       revokeRequest = true
+      controller.abort()
     }
   }, [size, initialData])
 

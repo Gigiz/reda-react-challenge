@@ -6,6 +6,6 @@ describe("<App />", () => {
   it("should be render", () => {
     render(<App />)
 
-    expect(screen.getByText("Open Modal")).toBeInTheDocument()
+    expect(screen.getByText("Random Users")).toBeInTheDocument()
   })
 })
