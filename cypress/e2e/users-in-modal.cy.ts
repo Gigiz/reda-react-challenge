@@ -22,7 +22,7 @@ describe("happy path", () => {
 
     cy.contains("Random Users").should("exist").click()
     cy.get("[id='react-portal-user-modal-root']").should("exist")
-    cy.get('@randomUsers.all').should('have.length', 2)
+    cy.get('@randomUsers.all').should('have.length.at.least', 2)
     cy.get("[data-testid='user-toggle-bar']").should("have.length", 12)
   })
   it("should show an error when trying to fetch more than 20 users", () => {

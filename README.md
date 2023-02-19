@@ -36,3 +36,5 @@ You can try a demo deployed on [vercel](https://reda-react-challenge.vercel.app/
 - Reorganize css creating a common theme to share tokens (colors, spacings, media-queries)
 - Optimize user's avatar loading
 - Split Users Components (Search, Profile, ToggleBar)
+- Validate input, allow only numeric values
+- Improve mobile responsiveness

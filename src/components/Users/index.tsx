@@ -76,6 +76,12 @@ export const Users: React.FC = () => {
                       className={[buttonGroup, selectedUser?.uid === user.uid ? "active" : undefined].join(
                         " "
                       )}
+                      style={{
+                        borderTopLeftRadius: index % gridSize === 0 ? 16 : undefined,
+                        borderBottomLeftRadius: index % gridSize === 0 ? 16 : undefined,
+                        borderTopRightRadius: (index + 1) % gridSize === 0 || index === data.length - 1 ? 16 : undefined,
+                        borderBottomRightRadius: (index + 1) % gridSize === 0 || index === data.length - 1 ? 16 : undefined,
+                      }}
                       onClick={() => setSelectedUser(user)}
                       key={index}
                     >
