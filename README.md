@@ -30,3 +30,8 @@ You can try a demo deployed on [vercel](https://reda-react-challenge.vercel.app/
 
 - Start the server: `pnpm dev`
 - Open new terminal and run: `pnpm cypress`
+
+### Open points
+
+- Reorganize css creating a common theme to share tokens (colors, spacings, media-queries)
+- 
