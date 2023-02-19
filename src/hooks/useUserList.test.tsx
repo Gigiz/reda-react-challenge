@@ -6,7 +6,7 @@ import { rest } from "msw"
 import { User } from "vite-env"
 import { ActionKind, useUserList } from "./useUserList"
 
-const users = [
+const users: User[] = [
   {
     id: 123,
     uid: "user-id",
@@ -14,6 +14,7 @@ const users = [
     last_name: "Franco",
     username: "pippo.franco",
     email: "pippo.franco@test.com",
+    avatar: new URL('http://localhost/image.jpg'),
   },
 ]
 
@@ -52,5 +53,11 @@ describe("useUserList", () => {
       expect(result.current.data.length).toStrictEqual(0)
       expect(result.current.error).toStrictEqual("too many users requested")
     })
+  })
+  it("should not refetch data if passing initial data", async () => {
+    const { result } = renderHook(() => useUserList(2, users))
+      expect(result.current.status).toStrictEqual(ActionKind.IDLE)
+      expect(result.current.data.length).toStrictEqual(1)
+      expect(result.current.error).toBeNull()
   })
 })
