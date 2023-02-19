@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react"
+import { useEffect, useReducer, useState } from "react"
 import { User } from "vite-env"
 
 export enum ActionKind {
@@ -19,12 +19,14 @@ type UserState = {
   error: string | null
 }
 
-export const useUserList = (size: number, initialData: User[] = []) => {
-  const initialState: UserState = {
+export const useUserList = (size: number, options: { initialData: User[] }) => {
+  const { initialData } = options
+
+  const [initialState, setInitialState] = useState<UserState>({
     status: ActionKind.IDLE,
     error: null,
-    data: initialData,
-  }
+    data: initialData || [],
+  })
 
   const [state, dispatch] = useReducer((state: UserState, action: UserAction) => {
     switch (action.type) {
@@ -39,12 +41,18 @@ export const useUserList = (size: number, initialData: User[] = []) => {
     }
   }, initialState)
 
+  const refetch = () => {
+    setInitialState((prevInitialState) => ({
+      ...prevInitialState,
+      data: [],
+    }))
+  }
+
   useEffect(() => {
     const controller = new AbortController()
     const { signal } = controller
 
     let revokeRequest = false
-
     const renderData = async () => {
       dispatch({ type: ActionKind.FETCHING })
 
@@ -59,7 +67,7 @@ export const useUserList = (size: number, initialData: User[] = []) => {
       }
     }
 
-    if (initialData.length === 0 && size > 0) {
+    if (!initialState.data || (initialState.data.length === 0 && size > 0)) {
       size > 20 ? dispatch({ type: ActionKind.ERROR, payload: "too many users requested" }) : renderData()
     }
 
@@ -67,7 +75,7 @@ export const useUserList = (size: number, initialData: User[] = []) => {
       revokeRequest = true
       controller.abort()
     }
-  }, [size, initialData])
+  }, [size, initialState.data])
 
-  return state
+  return { ...state, refetch }
 }

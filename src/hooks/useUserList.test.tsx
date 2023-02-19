@@ -14,7 +14,7 @@ const users: User[] = [
     last_name: "Franco",
     username: "pippo.franco",
     email: "pippo.franco@test.com",
-    avatar: new URL('http://localhost/image.jpg'),
+    avatar: new URL("http://localhost/image.jpg"),
   },
 ]
 
@@ -34,11 +34,11 @@ describe("useUserList", () => {
   afterEach(() => server.resetHandlers())
 
   it("should remains in IDLE state when no users are requested", () => {
-    const { result } = renderHook(() => useUserList(0, emptyInitialData))
+    const { result } = renderHook(() => useUserList(0, { initialData: emptyInitialData }))
     expect(result.current.status).toStrictEqual(ActionKind.IDLE)
   })
   it("should retrieve users", async () => {
-    const { result } = renderHook(() => useUserList(2, emptyInitialData))
+    const { result } = renderHook(() => useUserList(2, { initialData: emptyInitialData }))
     expect(result.current.status).toStrictEqual(ActionKind.FETCHING)
     await waitFor(() => {
       expect(result.current.status).toStrictEqual(ActionKind.FETCHED)
@@ -47,7 +47,7 @@ describe("useUserList", () => {
     })
   })
   it("should got too many user requested error", async () => {
-    const { result } = renderHook(() => useUserList(21, emptyInitialData))
+    const { result } = renderHook(() => useUserList(21, { initialData: emptyInitialData }))
     await waitFor(() => {
       expect(result.current.status).toStrictEqual(ActionKind.ERROR)
       expect(result.current.data.length).toStrictEqual(0)
@@ -55,9 +55,9 @@ describe("useUserList", () => {
     })
   })
   it("should not refetch data if passing initial data", async () => {
-    const { result } = renderHook(() => useUserList(2, users))
-      expect(result.current.status).toStrictEqual(ActionKind.IDLE)
-      expect(result.current.data.length).toStrictEqual(1)
-      expect(result.current.error).toBeNull()
+    const { result } = renderHook(() => useUserList(2, { initialData: users }))
+    expect(result.current.status).toStrictEqual(ActionKind.IDLE)
+    expect(result.current.data.length).toStrictEqual(1)
+    expect(result.current.error).toBeNull()
   })
 })

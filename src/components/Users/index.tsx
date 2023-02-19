@@ -9,8 +9,10 @@ const defaultSizeValue = 10
 
 export const Users: React.FC = () => {
   const sizeInputRef = useRef<HTMLInputElement>(null)
-  const { previousFetchedUser, clearFetchedUsers, saveFetchedUsers } = usePreviousUsersInModal()
-  const { status, data, error } = useUserList(parseUserSize(sizeInputRef.current?.value), previousFetchedUser)
+  const { previousFetchedUser, saveFetchedUsers } = usePreviousUsersInModal()
+  const { status, data, error, refetch } = useUserList(parseUserSize(sizeInputRef.current?.value), {
+    initialData: previousFetchedUser,
+  })
   const [selectedUser, setSelectedUser] = useState<User | null>(previousFetchedUser[0])
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export const Users: React.FC = () => {
           defaultValue={previousFetchedUser.length || defaultSizeValue}
           type="text"
         />
-        <button className={searchUsersButton} onClick={clearFetchedUsers}>
+        <button className={searchUsersButton} onClick={refetch}>
           Refetch
         </button>
       </div>
