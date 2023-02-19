@@ -26,7 +26,12 @@ export const Users: React.FC = () => {
     <div>
       <div className={userSearch}>
         <label htmlFor="users-number">Insert users' number to fetch</label>
-        <input ref={sizeInputRef} id="users-number" defaultValue={defaultSizeValue} type="text" />
+        <input
+          ref={sizeInputRef}
+          id="users-number"
+          defaultValue={previousFetchedUser.length || defaultSizeValue}
+          type="text"
+        />
         <button className={searchUsersButton} onClick={clearFetchedUsers}>
           Refetch
         </button>
@@ -66,7 +71,9 @@ export const Users: React.FC = () => {
                   return (
                     <button
                       data-testid="user-toggle-bar"
-                      className={[buttonGroup, selectedUser?.uid === user.uid ? "active" : undefined].join(" ")}
+                      className={[buttonGroup, selectedUser?.uid === user.uid ? "active" : undefined].join(
+                        " "
+                      )}
                       onClick={() => setSelectedUser(user)}
                       key={index}
                     >

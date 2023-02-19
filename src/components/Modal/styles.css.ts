@@ -25,7 +25,7 @@ export const modal = style({
     "screen and (min-width: 768px)": {
       width: "85%",
       maxWidth: 800,
-      height: "60%",
+      height: 560,
     },
   },
 })
