@@ -65,6 +65,7 @@ export const Users: React.FC = () => {
                 {data.map((user, index) => {
                   return (
                     <button
+                      data-testid="user-toggle-bar"
                       className={[buttonGroup, selectedUser?.uid === user.uid ? "active" : undefined].join(" ")}
                       onClick={() => setSelectedUser(user)}
                       key={index}

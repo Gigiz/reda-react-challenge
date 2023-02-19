@@ -31,9 +31,9 @@ const ModalContent: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className={modalOverlay}>
       <div className={modal}>
-        <div onClick={closeModal} className={closeModalButton}>
+        <button data-testid="close-modal" onClick={closeModal} className={closeModalButton}>
           &times;
-        </div>
+        </button>
         <div>{children}</div>
       </div>
     </div>

@@ -19,7 +19,7 @@ export const modal = style({
   width: "100%",
   height: "100%",
   position: "relative",
-  padding: '64px 24px 24px',
+  padding: "64px 24px 24px",
   zIndex: 1,
   "@media": {
     "screen and (min-width: 768px)": {
@@ -32,6 +32,8 @@ export const modal = style({
 
 export const closeModalButton = style({
   fontSize: 24,
+  backgroundColor: "#363c48",
+  color: "white",
   cursor: "pointer",
   padding: "8px 12px",
   position: "absolute",
@@ -48,9 +50,9 @@ export const openModalButton = style({
   backgroundColor: "rgb(213, 68, 116)",
   padding: "16px 24px",
   borderRadius: "16px",
-  color: 'white',
-  cursor: 'pointer',
-  ':hover': {
+  color: "white",
+  cursor: "pointer",
+  ":hover": {
     backgroundColor: "#dc658d",
   },
 })
