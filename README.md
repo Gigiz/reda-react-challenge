@@ -26,7 +26,7 @@ You can try a demo deployed on [vercel](https://reda-react-challenge.vercel.app/
 
 - Run all suites: `pnpm test`
 
-## TODO Running end to end test
+## Running end to end test
 
-- Start the server: `pnpm dev` or `yarn start`
-- Open new terminal and run: `npm run e2e` or `yarn e2e`
+- Start the server: `pnpm dev`
+- Open new terminal and run: `pnpm cypress`
