@@ -1,7 +1,9 @@
-import { PropsWithChildren } from "react"
+import { PropsWithChildren, useRef } from "react"
 import { ReactPortal } from "components/ReactPortal"
 import { ModalContextProvider, useModal } from "context/ModalContext"
 import { closeModalButton, modal, modalOverlay, openModalButton } from "./styles.css"
+import { useClickOutside } from "hooks/useClickOutside"
+import { useEscapeKey } from "hooks/useEscapeKey"
 
 const ModalRoot: React.FC<PropsWithChildren> = ({ children }) => (
   <ModalContextProvider>{children}</ModalContextProvider>
@@ -27,10 +29,16 @@ const ModalTrigger: React.FC = () => {
 }
 
 const ModalContent: React.FC<PropsWithChildren> = ({ children }) => {
+  const ref = useRef<HTMLDivElement>(null)
+
   const { closeModal } = useModal()
+
+  useClickOutside(closeModal, ref)
+  useEscapeKey(closeModal)
+
   return (
     <div className={modalOverlay}>
-      <div className={modal}>
+      <div ref={ref} className={modal}>
         <button data-testid="close-modal" onClick={closeModal} className={closeModalButton}>
           &times;
         </button>
