@@ -20,12 +20,12 @@ export const modal = style({
   height: "100%",
   position: "relative",
   padding: "64px 24px 24px",
+  overflowWrap: "anywhere",
   zIndex: 1,
   "@media": {
     "screen and (min-width: 768px)": {
-      width: "85%",
       maxWidth: 800,
-      height: 560,
+      maxHeight: 560,
     },
   },
 })
